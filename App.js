@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { auth } from './firebase';
+import { AdminProvider } from './src/contexts/AdminContext';
+import NotLoggedStack from './src/navigation/stackScreens/NotLoggedStack';
+import LoggedStack from './src/navigation/stackScreens/LoggedStack';
+import { Provider } from 'react-redux';
+import {store} from "./src/redux/store";
 
-export default function App() {
+export default App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState();
+  auth.onAuthStateChanged((user) => {
+    user ? setIsLoggedIn(true) : setIsLoggedIn(false);
+  });
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <Provider store={store}>
+          <AdminProvider>
+              <NavigationContainer>
+                  {isLoggedIn === false ? <NotLoggedStack /> : <LoggedStack />}
+              </NavigationContainer>
+           </AdminProvider>
+       </Provider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
