@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/core';
 
-import { handleSignUp } from '../../../firebase';
+import { signUp } from '../../firebase/config';
 
 import styles from '../../styles/Styles';
 
@@ -56,7 +56,7 @@ const SignUpScreen = () => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => handleSignUp(userName, email, password)}
+          onPress={() => signUp(userName, email, password)}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>

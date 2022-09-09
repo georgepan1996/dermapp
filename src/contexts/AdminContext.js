@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { auth, db } from '../../firebase';
+import { auth, db, doc, getDoc } from '../firebase/config';
 
 export const AdminContext = React.createContext();
 
@@ -9,11 +9,17 @@ export const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     if (auth.currentUser) {
-      const docRef = db.collection('users').doc(auth.currentUser.uid);
-      docRef.get().then((results) => {
-        const data = results.data();
-        setData(data);
-      });
+      const userRef = doc(db,'users', auth.currentUser.uid);
+      getDoc(userRef)
+          .then(userRefSnap => {
+        if (userRefSnap.exists()) {
+          console.log("Document data:", userRefSnap.data());
+        } else {
+          console.log("No such document!");
+        }
+      })
+          .catch(err => console.error('error on getting user data in AdminProvider', err))
+
     } else {
     }
   }, []);

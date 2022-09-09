@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, ScrollView, FlatList, TouchableOpacity} from 'react-native';
-import {auth, db, handleLogin, handleSignOut} from '../../../../firebase';
+import {auth, db, signIn, handleSignOut, collection, getDoc, query, where, getDocs} from '../../../firebase/config';
 import HomeScreenStyles from "../../../styles/HomeScreenStyles";
 import Icon from '../../../styles/icons';
 import SectionDataContentItem from "./SectionDataContentItem";
 import SectionArticle from "./SectionArticle";
 import {useDispatch, useSelector} from "react-redux";
-import {selectArticles, getArticles, addHomeScreenArticles, uploadArticle} from "../../../redux/slices/articlesSlice";
+import {selectArticles, getArticles, addHomeScreenArticles} from "../../../redux/slices/articlesSlice";
 
 
 //theme
@@ -25,37 +25,25 @@ const patientsIconText = 'Patients'
 const profileIconText = 'Profile'
 
 //other comments
-    //article must have a limit of characters for title and description
-    //validate article params
+//article must have a limit of characters for title and description
+//validate article params
 
 const HomeScreen = () => {
     const dispatch = useDispatch()
     //section vars
-    const createArticle = () => {
-        let article = {
-            id: 10,
-            content: 'uploaded article content',
-            imageUrl: 'https://l.facebook.com/l.php?u=https%3A%2F%2Fhips.hearstapps.com%2Fhmg-prod.s3.amazonaws.com%2Fimages%2Fskincare-1588698347.png%3Fcrop%3D1.00xw%253A0.752xh%253B0%252C0.175xh%26resize%3D1200%26fbclid%3DIwAR0Xvg47IfzOyCsTZXNn6YERifI2CgzcSu-2xtn0FAP0ZK2YJalcWh3W0yI&h=AT0LvEsMhwhq5ZPb_IJ-7EfuDMwQ2AUDVfU7pEFgd_ItUXU-irXjcVklKwJpfUv7ZcLu10ozoPzg7N8pytCpzhjHh-JM7pUv75hr7oK5WbeVdPUF-nAjT5TgWt9-FZ36HdVGgg',
-            title: 'uploaded article title'
-        }
-        console.log('article to create', article)
-        uploadArticle(article)
-    }
 
     const showCollectionResponse = () => {
-        handleLogin('giwrgos@giwrgos.com', '12345678').then((userCredentials) => {
-            getArticles().then(snapshot => {
-                let articles = []
-                snapshot.forEach(doc => {
-                    console.log(doc.data())
-                    articles.push(doc.data())
-                })
-                console.log('articles', articles)
-                dispatch(addHomeScreenArticles({articles}))
-            }).catch((error) => {
-                console.log('Error getting articles:\n', error);
-            });
-        }).catch((error) => alert(error.message));
+        getArticles().then(snapshot => {
+            let articles = []
+            snapshot.forEach(doc => {
+                console.log(doc.data())
+                articles.push(doc.data())
+            })
+            console.log('articles', articles)
+            dispatch(addHomeScreenArticles({articles}))
+        }).catch((error) => {
+            console.log('Error getting articles:\n', error);
+        });
     }
     const articlesList = useSelector(selectArticles)
     const [data, setData] = useState([]);
@@ -64,15 +52,14 @@ const HomeScreen = () => {
 
     useEffect(() => {
         if (auth.currentUser) {
-            const docRef = db.collection('users').doc(auth.currentUser.uid);
-            docRef.get().then((results) => {
+            const docRef = collection(db, 'users', auth.currentUser.uid);
+            getDoc(docRef).then((results) => {
                 const data = results.data();
-                setData(data);
-
-                const docRefforPerms = db
-                    .collection('roles')
-                    .where('roleId', '==', data.roleId);
-                docRefforPerms.get().then((queryResult) => {
+                console.log('data', data)
+                setData([data])
+                query(collection(db, "cities"), where("capital", "==", true));
+                const docRefforPerms = query(collection(db, 'roles'), where('roleId', '==', data.roleId))
+                getDocs(docRefforPerms).then((queryResult) => {
                     queryResult.forEach((doc) => {
                         const roleData = doc.data();
                         setPerms(roleData.perms[0].actions);
@@ -132,11 +119,11 @@ const HomeScreen = () => {
                     </View>
 
                     <View style={HomeScreenStyles.sectionDataContent}>
-                        <SectionDataContentItem itemDescription={'Active patients'} itemData={27} />
-                        <SectionDataContentItem itemDescription={'Active therapies'} itemData={14} />
-                        <SectionDataContentItem itemDescription={'°C'} itemData={18} />
-                        <SectionDataContentItem itemDescription={'UV'} itemData={2} />
-                        <SectionDataContentItem itemDescription={'Humidity'} itemData={24} />
+                        <SectionDataContentItem itemDescription={'Active patients'} itemData={27}/>
+                        <SectionDataContentItem itemDescription={'Active therapies'} itemData={14}/>
+                        <SectionDataContentItem itemDescription={'°C'} itemData={18}/>
+                        <SectionDataContentItem itemDescription={'UV'} itemData={2}/>
+                        <SectionDataContentItem itemDescription={'Humidity'} itemData={24}/>
                     </View>
 
                 </View>
@@ -192,7 +179,6 @@ const HomeScreen = () => {
                     style={HomeScreenStyles.barIconWithText}
                 >
                     <TouchableOpacity
-                        onPress={createArticle}
                     >
                         <Icon.Feather
                             name='plus-circle'
