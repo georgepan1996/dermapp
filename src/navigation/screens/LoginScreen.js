@@ -24,7 +24,6 @@ const LoginScreen = () => {
           </Text>
         </View>
         <View style={styles.loginSection}>
-
           <View style={styles.userConnectionInputs}>
             <TextInput
                 placeholder='Email'

@@ -50,27 +50,6 @@ const HomeScreen = () => {
     const [perms, setPerms] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        if (auth.currentUser) {
-            const docRef = collection(db, 'users', auth.currentUser.uid);
-            getDoc(docRef).then((results) => {
-                const data = results.data();
-                console.log('data', data)
-                setData([data])
-                query(collection(db, "cities"), where("capital", "==", true));
-                const docRefforPerms = query(collection(db, 'roles'), where('roleId', '==', data.roleId))
-                getDocs(docRefforPerms).then((queryResult) => {
-                    queryResult.forEach((doc) => {
-                        const roleData = doc.data();
-                        setPerms(roleData.perms[0].actions);
-                    });
-                });
-                setLoading(false);
-            });
-        } else {
-        }
-    }, []);
-
     return (
         <View style={HomeScreenStyles.container}>
             <View style={[HomeScreenStyles.header, HomeScreenStyles.bar]}>
@@ -179,6 +158,7 @@ const HomeScreen = () => {
                     style={HomeScreenStyles.barIconWithText}
                 >
                     <TouchableOpacity
+                        onPress={handleSignOut}
                     >
                         <Icon.Feather
                             name='plus-circle'

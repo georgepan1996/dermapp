@@ -19,6 +19,7 @@ const auth = getAuth(app)
 const db = getFirestore(app)
 
 const handleSignOut = () => {
+    console.log('handleSignOut run')
     signOut(auth).then(res => console.log('sign out was successful'))
         .catch(err => console.error('error on sign out', err))
 }
@@ -46,6 +47,7 @@ const signUp = (username, email, password) => {
         .catch(err => console.error('user sign up error', err.message));
 };
 const signIn = (email, password) => {
+    console.log('sign in args', auth, email, password)
     signInWithEmailAndPassword(auth, email, password).then(res => {
         console.log('successful sign in', res)
     }).catch(err => console.error('error on sign in', err))
