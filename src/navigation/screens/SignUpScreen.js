@@ -26,6 +26,7 @@ const SignUpScreen = () => {
           <TouchableOpacity>
             <Icon
               name='left'
+              // size='24' hides a textfield
               color='black'
               onPress={() => navigation.replace('Login')}
               style={styles.backarrow}
