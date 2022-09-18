@@ -16,19 +16,22 @@ const articles = createSlice({
   initialState,
   reducers: {
     removeArticle: (state, action) => {
+      // let articleIndex must be a const for all other reducers
       let articleIndex = state.homeScreenArticles.findIndex(
         (article) => article.id === action.payload.id
       );
       console.log('articleIndex', articleIndex);
       console.log('removed', state.homeScreenArticles.splice(articleIndex, 1));
     },
-    // makeArticleFavorite: (state, action) => {
-    //   let articleIndex = state.homeScreenArticles.findIndex(
-    //     (article) => article.id === action.payload.id
-    //   );
-    //   console.log('articleIndex', articleIndex);
-    //   console.log('added', state.homeScreenArticles.splice(articleIndex, 1));
-    // },
+    makeArticleFavorite: (state, action) => {
+      let articleIndex = state.homeScreenArticles.findIndex(
+        (article) => article.id === action.payload.id
+      );
+      console.log('articleIndex', articleIndex);
+      state.homeScreenArticles[articleIndex].isFavorite =
+        !state.homeScreenArticles[articleIndex].isFavorite;
+      console.log('favorited article');
+    },
     addHomeScreenArticles: (state, action) => {
       state.homeScreenArticles.push(...action.payload.articles);
     },
@@ -36,6 +39,7 @@ const articles = createSlice({
 });
 
 export const selectArticles = (state) => state.articles.homeScreenArticles;
-export const { removeArticle, addHomeScreenArticles } = articles.actions;
+export const { removeArticle, makeArticleFavorite, addHomeScreenArticles } =
+  articles.actions;
 export { getArticles };
 export default articles.reducer;

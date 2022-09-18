@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import HomeScreenStyles from '../../../styles/HomeScreenStyles';
-import { removeArticle } from '../../../redux/slices/articlesSlice';
+import {
+  removeArticle,
+  makeArticleFavorite,
+} from '../../../redux/slices/articlesSlice';
 import { useDispatch } from 'react-redux';
 
 const SectionArticle = (article) => {
@@ -9,6 +12,10 @@ const SectionArticle = (article) => {
   const deleteArticle = (id) => {
     console.log('deleting article id', id);
     dispatch(removeArticle({ id }));
+  };
+  const favoriteArticle = (id) => {
+    console.log('favoriting article id', id);
+    dispatch(makeArticleFavorite({ id }));
   };
   return (
     <TouchableOpacity
@@ -23,7 +30,11 @@ const SectionArticle = (article) => {
           source={{ uri: article.imageUrl }}
         />
         <View style={HomeScreenStyles.articleDescription}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              favoriteArticle(article.id);
+            }}
+          >
             <Text style={HomeScreenStyles.articleTitle}>
               {article.isFavorite ? '<3' : '-'}
             </Text>
