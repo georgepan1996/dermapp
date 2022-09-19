@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  Modal,
   TouchableOpacity,
 } from 'react-native';
 import {
@@ -19,13 +20,16 @@ import {
 } from '../../../firebase/config';
 import HomeScreenStyles from '../../../styles/HomeScreenStyles';
 import Icon from '../../../styles/icons';
+import AddArticleFormComponent from './AddArticleFormComponent';
 import SectionDataContentItem from './SectionDataContentItem';
 import SectionArticle from './SectionArticle';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   selectArticles,
   getArticles,
   addHomeScreenArticles,
+  doaddArticleLocalyAndToServer,
 } from '../../../redux/slices/articlesSlice';
 
 //theme
@@ -50,7 +54,6 @@ const profileIconText = 'Profile';
 const HomeScreen = () => {
   const dispatch = useDispatch();
   //section vars
-
   const showCollectionResponse = () => {
     getArticles()
       .then((snapshot) => {
@@ -73,8 +76,46 @@ const HomeScreen = () => {
   const [perms, setPerms] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const modaler = () => {
+    setModalVisible(!modalVisible);
+  };
+
+  // const addArticleToParent = (title, content, image, isFavorite) => {
+  //   addArticleLocalyAndToServer(title, content, image, isFavorite);
+  // };
+
+  const addArticleLocalyAndToServer = (title, content, image, isFavorite) => {
+    console.log(
+      'addArticleLocalyAndToServer',
+      title,
+      content,
+      image,
+      isFavorite
+    );
+    // dispatch(
+    //   doaddArticleLocalyAndToServer({ title, content, image, isFavorite })
+    // );
+    dispatch(
+      doaddArticleLocalyAndToServer({ title, content, image, isFavorite })
+    );
+    showCollectionResponse();
+  };
+
   return (
     <View style={HomeScreenStyles.container}>
+      <Modal animationType='slide' transparent={true} visible={modalVisible}>
+        <AddArticleFormComponent
+          modaler={() => {
+            setModalVisible(!modalVisible);
+          }}
+          addArticleToParent={(title, content, image, isFavorite) => {
+            addArticleLocalyAndToServer(title, content, image, isFavorite),
+              console.log('home out');
+          }}
+        />
+      </Modal>
       <View style={[HomeScreenStyles.header, HomeScreenStyles.bar]}>
         <View style={HomeScreenStyles.barIconsLeft}>
           <Icon.FontAwesome
@@ -186,15 +227,20 @@ const HomeScreen = () => {
             <Text style={HomeScreenStyles.barIconText}>{patientsIconText}</Text>
           </TouchableOpacity>
         </View>
-
         <View style={HomeScreenStyles.barIconWithText}>
-          <Icon.Ionicons
-            name='person'
-            color={barIconColor}
-            style={HomeScreenStyles.barIcon}
-            size={barIconSize}
-          ></Icon.Ionicons>
-          <Text style={HomeScreenStyles.barIconText}>{profileIconText}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Icon.Ionicons
+              name='person'
+              color={barIconColor}
+              style={HomeScreenStyles.barIcon}
+              size={barIconSize}
+            ></Icon.Ionicons>
+            <Text style={HomeScreenStyles.barIconText}>{profileIconText}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
