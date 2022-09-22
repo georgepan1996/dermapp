@@ -59,8 +59,11 @@ const HomeScreen = () => {
       .then((snapshot) => {
         let articles = [];
         snapshot.forEach((doc) => {
-          console.log(doc.data());
-          articles.push(doc.data());
+          // console.log(doc.data());
+
+          let article = doc.data();
+          article.id = doc.id;
+          articles.push(article);
         });
         console.log('articles', articles);
         dispatch(addHomeScreenArticles({ articles }));
@@ -173,7 +176,7 @@ const HomeScreen = () => {
         <ScrollView style={HomeScreenStyles.sectionArticles}>
           {articlesList.map((article) => (
             <SectionArticle
-              key={article.id.toString()}
+              key={article.id}
               id={article.id}
               imageUrl={article.imageUrl}
               title={article.title}

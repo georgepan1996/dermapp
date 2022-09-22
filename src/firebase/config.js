@@ -73,15 +73,15 @@ const signIn = (email, password) => {
     .catch((err) => console.error('error on sign in', err));
 };
 
-const addArticle = (title, id, content, imageUrl, isFavorite) => {
-  // const RandomGeneratedId = String(Math.round(Math.random() * 100));
+const addArticle = (title, content, imageUrl, isFavorite) => {
+  const docRef = collection(db, 'posts');
 
-  setDoc(doc(db, 'posts', id), {
-    content: content,
-    id: id, // Most secure way must be found
-    imageUrl: imageUrl,
-    isFavorite: isFavorite,
-    title: title,
+  setDoc(doc(docRef), {
+    content,
+    // id: id, // Most secure way must be found
+    imageUrl,
+    isFavorite,
+    title,
   });
 };
 

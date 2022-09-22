@@ -6,6 +6,7 @@ import {
   doc,
   setDoc,
   deleteDoc,
+  updateDoc,
   addArticle,
 } from '../../firebase/config';
 
@@ -24,18 +25,16 @@ const articles = createSlice({
   initialState,
   reducers: {
     doaddArticleLocalyAndToServer: (state, action) => {
-      let title = action.payload.title;
-      let content = action.payload.content;
-      let image = action.payload.image;
-      let isFavorite = action.payload.isFavorite;
+      let { title, content, image, isFavorite } = action.payload;
 
       addArticle(
         title,
-        String(state.homeScreenArticles.length),
+        // Math.round(Math.random() * 1000),
         content,
         image,
         isFavorite
       );
+      // getArticles();
     },
     removeArticle: (state, action) => {
       // let articleIndex must be a const for all other reducers
@@ -44,16 +43,15 @@ const articles = createSlice({
       );
       console.log('articleIndex', articleIndex);
       console.log('removed', state.homeScreenArticles.splice(articleIndex, 1));
-      deleteDoc(doc(db, 'posts', String(articleIndex)));
+      deleteDoc(doc(db, 'posts', action.payload.id));
     },
     makeArticleFavorite: (state, action) => {
-      let articleIndex = state.homeScreenArticles.findIndex(
-        (article) => article.id === action.payload.id
-      );
-      console.log('articleIndex', articleIndex);
-      state.homeScreenArticles[articleIndex].isFavorite =
-        !state.homeScreenArticles[articleIndex].isFavorite;
-      console.log('favorited article');
+      action.payload.isFavorite = !action.payload.isFavorite;
+
+      const isFavoriteRef = doc(db, 'posts', action.payload.id);
+      updateDoc(isFavoriteRef, {
+        isFavorite: action.payload.isFavorite,
+      });
     },
     addHomeScreenArticles: (state, action) => {
       state.homeScreenArticles.push(...action.payload.articles);
