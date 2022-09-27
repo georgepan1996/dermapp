@@ -13,9 +13,9 @@ const SectionArticle = (article) => {
     console.log('deleting article id', id);
     dispatch(removeArticle({ id }));
   };
-  const favoriteArticle = (id) => {
-    console.log('favoriting article id', id);
-    dispatch(makeArticleFavorite({ id }));
+  const favoriteArticle = (article) => {
+    console.log('favoriting article id', article);
+    dispatch(makeArticleFavorite(article));
   };
   return (
     <TouchableOpacity
@@ -32,7 +32,7 @@ const SectionArticle = (article) => {
         <View style={HomeScreenStyles.articleDescription}>
           <TouchableOpacity
             onPress={() => {
-              favoriteArticle(article.id);
+              favoriteArticle(article);
             }}
           >
             <Text style={HomeScreenStyles.articleTitle}>

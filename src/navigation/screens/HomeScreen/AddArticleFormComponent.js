@@ -41,7 +41,7 @@ const AddArticleFormComponent = (props) => {
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={() => {
-              props.modaler(), console.log(selectArticles.length);
+              props.modaler();
             }}
           >
             <Text style={styles.textStyle}>Hide Modal</Text>

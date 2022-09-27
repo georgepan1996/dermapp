@@ -14,6 +14,14 @@ const initialState = {
   homeScreenArticles: [],
 };
 
+const dbtester = (id, state) => {
+  const isFavoriteRef = doc(db, 'posts', id);
+
+  updateDoc(isFavoriteRef, {
+    isFavorite: state,
+  });
+};
+
 const getArticles = () => {
   console.log('get articles');
   const articlesRef = collection(db, 'posts');
@@ -41,17 +49,24 @@ const articles = createSlice({
       let articleIndex = state.homeScreenArticles.findIndex(
         (article) => article.id === action.payload.id
       );
-      console.log('articleIndex', articleIndex);
       console.log('removed', state.homeScreenArticles.splice(articleIndex, 1));
       deleteDoc(doc(db, 'posts', action.payload.id));
     },
     makeArticleFavorite: (state, action) => {
-      action.payload.isFavorite = !action.payload.isFavorite;
-
       const isFavoriteRef = doc(db, 'posts', action.payload.id);
+
       updateDoc(isFavoriteRef, {
-        isFavorite: action.payload.isFavorite,
+        isFavorite: !action.payload.isFavorite,
+      }).then(() => {
+        console.log('updated');
       });
+
+      let changedArticleIndex = state.homeScreenArticles.findIndex(
+        (article) => article.id === action.payload.id
+      );
+
+      state.homeScreenArticles[changedArticleIndex].isFavorite =
+        !state.homeScreenArticles[changedArticleIndex].isFavorite;
     },
     addHomeScreenArticles: (state, action) => {
       state.homeScreenArticles.push(...action.payload.articles);

@@ -1,4 +1,7 @@
 import { initializeApp } from 'firebase/app';
+import { getMessaging } from "firebase/messaging";
+
+
 import {
   getFirestore,
   collection,
@@ -7,6 +10,7 @@ import {
   doc,
   setDoc,
   query,
+  updateDoc,
   where,
   deleteDoc,
 } from 'firebase/firestore/lite';
@@ -112,6 +116,7 @@ export {
   getDoc,
   getDocs,
   doc,
+  updateDoc,
   setDoc,
   roleData,
   data,
