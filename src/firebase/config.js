@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getMessaging } from "firebase/messaging";
-
+import { getMessaging } from 'firebase/messaging';
 
 import {
   getFirestore,
@@ -36,6 +35,8 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// const messaging = getMessaging(app);
 
 const handleSignOut = () => {
   console.log('handleSignOut run');
