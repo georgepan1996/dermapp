@@ -52,6 +52,24 @@ const profileIconText = 'Profile';
 //validate article params
 
 const HomeScreen = () => {
+  // function requestPermission() {
+  //   console.log('Requesting permission...');
+  //   Notification.requestPermission().then((permission) => {
+  //     if (permission === 'granted') {
+  //       console.log('Notification permission granted.');
+  //     }
+  //   });
+  // }
+  // console.log('NOTIFY', Notification);
+
+  const requestPermission = () => {
+    console.log('Requesting permission...');
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+      }
+    });
+  };
   const dispatch = useDispatch();
   //section vars
   const showCollectionResponse = () => {
@@ -188,13 +206,15 @@ const HomeScreen = () => {
       </View>
       <View style={[HomeScreenStyles.footer, HomeScreenStyles.bar]}>
         <View style={HomeScreenStyles.barIconWithText}>
-          <Icon.Feather
-            style={HomeScreenStyles.barIcon}
-            name='home'
-            color={barIconColor}
-            size={barIconSize}
-          ></Icon.Feather>
-          <Text style={HomeScreenStyles.barIconText}>{homeIconText}</Text>
+          <TouchableOpacity onPress={requestPermission}>
+            <Icon.Feather
+              style={HomeScreenStyles.barIcon}
+              name='home'
+              color={barIconColor}
+              size={barIconSize}
+            ></Icon.Feather>
+            <Text style={HomeScreenStyles.barIconText}>{homeIconText}</Text>
+          </TouchableOpacity>
         </View>
         <View style={HomeScreenStyles.barIconWithText}>
           <TouchableOpacity onPress={showCollectionResponse}>
