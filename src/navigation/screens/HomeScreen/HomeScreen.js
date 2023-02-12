@@ -25,6 +25,8 @@ import SectionDataContentItem from './SectionDataContentItem';
 import SectionArticle from './SectionArticle';
 import { useDispatch, useSelector } from 'react-redux';
 
+// import messaging from '@react-native-firebase/messaging';
+
 import {
   selectArticles,
   getArticles,
@@ -62,14 +64,17 @@ const HomeScreen = () => {
   // }
   // console.log('NOTIFY', Notification);
 
-  const requestPermission = () => {
-    console.log('Requesting permission...');
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        console.log('Notification permission granted.');
-      }
-    });
-  };
+  // async function requestUserPermission() {
+  //   const authStatus = await messaging().requestPermission();
+  //   const enabled =
+  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+  //   if (enabled) {
+  //     console.log('Authorization status:', authStatus);
+  //   }
+  // }
+
   const dispatch = useDispatch();
   //section vars
   const showCollectionResponse = () => {
@@ -77,8 +82,6 @@ const HomeScreen = () => {
       .then((snapshot) => {
         let articles = [];
         snapshot.forEach((doc) => {
-          // console.log(doc.data());
-
           let article = doc.data();
           article.id = doc.id;
           articles.push(article);
@@ -99,9 +102,9 @@ const HomeScreen = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const modaler = () => {
-    setModalVisible(!modalVisible);
-  };
+  // const modaler = () => {
+  //   setModalVisible(!modalVisible);
+  // };
 
   // const addArticleToParent = (title, content, image, isFavorite) => {
   //   addArticleLocalyAndToServer(title, content, image, isFavorite);
@@ -206,7 +209,7 @@ const HomeScreen = () => {
       </View>
       <View style={[HomeScreenStyles.footer, HomeScreenStyles.bar]}>
         <View style={HomeScreenStyles.barIconWithText}>
-          <TouchableOpacity onPress={requestPermission}>
+          <TouchableOpacity>
             <Icon.Feather
               style={HomeScreenStyles.barIcon}
               name='home'
