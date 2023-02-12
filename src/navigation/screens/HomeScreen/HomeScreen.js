@@ -5,8 +5,12 @@ import {
   ScrollView,
   FlatList,
   Modal,
+  Button,
+  SafeAreaView,
+  StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import { Calendar } from 'react-native-calendars';
 import {
   auth,
   db,
@@ -24,8 +28,6 @@ import AddArticleFormComponent from './AddArticleFormComponent';
 import SectionDataContentItem from './SectionDataContentItem';
 import SectionArticle from './SectionArticle';
 import { useDispatch, useSelector } from 'react-redux';
-
-// import messaging from '@react-native-firebase/messaging';
 
 import {
   selectArticles,
@@ -54,27 +56,6 @@ const profileIconText = 'Profile';
 //validate article params
 
 const HomeScreen = () => {
-  // function requestPermission() {
-  //   console.log('Requesting permission...');
-  //   Notification.requestPermission().then((permission) => {
-  //     if (permission === 'granted') {
-  //       console.log('Notification permission granted.');
-  //     }
-  //   });
-  // }
-  // console.log('NOTIFY', Notification);
-
-  // async function requestUserPermission() {
-  //   const authStatus = await messaging().requestPermission();
-  //   const enabled =
-  //     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-  //     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  //   if (enabled) {
-  //     console.log('Authorization status:', authStatus);
-  //   }
-  // }
-
   const dispatch = useDispatch();
   //section vars
   const showCollectionResponse = () => {
@@ -102,13 +83,9 @@ const HomeScreen = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  // const modaler = () => {
-  //   setModalVisible(!modalVisible);
-  // };
-
-  // const addArticleToParent = (title, content, image, isFavorite) => {
-  //   addArticleLocalyAndToServer(title, content, image, isFavorite);
-  // };
+  useEffect(() => {
+    showCollectionResponse();
+  }, []);
 
   const addArticleLocalyAndToServer = (title, content, image, isFavorite) => {
     console.log(
@@ -140,6 +117,7 @@ const HomeScreen = () => {
           }}
         />
       </Modal>
+
       <View style={[HomeScreenStyles.header, HomeScreenStyles.bar]}>
         <View style={HomeScreenStyles.barIconsLeft}>
           <Icon.FontAwesome
@@ -165,8 +143,9 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={HomeScreenStyles.section}>
-        <View style={HomeScreenStyles.sectionData}></View>
         <View style={HomeScreenStyles.sectionData}>
+          <Calendar />
+
           <View style={HomeScreenStyles.sectionDataTitleWithIcon}>
             <Text style={HomeScreenStyles.sectionDataTitle}>Quick facts</Text>
             <Icon.Ionicons
