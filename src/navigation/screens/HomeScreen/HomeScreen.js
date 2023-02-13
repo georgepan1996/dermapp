@@ -30,6 +30,13 @@ import SectionArticle from './SectionArticle';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+  AccordionList,
+} from 'accordion-collapse-react-native';
+
+import {
   selectArticles,
   getArticles,
   addHomeScreenArticles,
@@ -144,7 +151,16 @@ const HomeScreen = () => {
       </View>
       <View style={HomeScreenStyles.section}>
         <View style={HomeScreenStyles.sectionData}>
-          <Calendar />
+          <Collapse>
+            <CollapseHeader>
+              <View>
+                <Text>Calendar</Text>
+              </View>
+            </CollapseHeader>
+            <CollapseBody>
+              <Calendar />
+            </CollapseBody>
+          </Collapse>
 
           <View style={HomeScreenStyles.sectionDataTitleWithIcon}>
             <Text style={HomeScreenStyles.sectionDataTitle}>Quick facts</Text>
