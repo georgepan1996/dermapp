@@ -150,6 +150,7 @@ const HomeScreen = () => {
           ></Icon.Feather>
         </View>
       </View>
+
       <View style={HomeScreenStyles.section}>
         <View style={HomeScreenStyles.sectionData}>
           <View style={HomeScreenStyles.sectionDataTitleWithIcon}>
@@ -178,27 +179,36 @@ const HomeScreen = () => {
               itemData={24}
             />
           </View>
-          <View>
-            <Collapse>
-              <CollapseHeader>
-                <View>
-                  <Text>Click for Calendar</Text>
-                </View>
-              </CollapseHeader>
-              <CollapseBody
+          <Collapse>
+            <CollapseHeader>
+              <View style={{
+                height: 20
+              }}>
+                <Text>Click for Calendar</Text>
+              </View>
+            </CollapseHeader>
+            <CollapseBody
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexDirection: 'row',
-                  backgroundColor: '#EDEDED',
+                  flexDirection: 'column',
+                  backgroundColor: 'red',
+                  position: 'absolute',
+                  top: 20
                 }}
-              >
-                {/* <Calendar /> */}
-                <SectionDataContentItem itemDescription={'UV'} itemData={2} />
-              </CollapseBody>
-            </Collapse>
-          </View>
+            >
+              <Calendar />
+              {/*<Text>dfsd</Text>*/}
+              {/*<Text>dfsd</Text>*/}
+              {/*<Text>dfsd</Text>*/}
+              {/*<SectionDataContentItem itemDescription={'UV'} itemData={2} />*/}
+            </CollapseBody>
+          </Collapse>
         </View>
+
+        <View>
+        </View>
+
         <View>
           <ScrollView style={HomeScreenStyles.sectionArticles}>
             {articlesList.map((article) => (

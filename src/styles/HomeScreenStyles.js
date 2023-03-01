@@ -10,7 +10,6 @@ const articleTextColor = '#737373';
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
   },
   header: {
     // is it needed?
@@ -46,14 +45,12 @@ export default StyleSheet.create({
 
   section: {
     backgroundColor: backgroundColor,
-    flex: 1,
     paddingHorizontal: '3%',
     paddingTop: '3%',
   },
 
   sectionData: {
     backgroundColor: '#FFF',
-
     flex: 1,
     borderRadius: 30,
     marginBottom: '3%',
