@@ -38,6 +38,7 @@ import {
 
 import {
   selectArticles,
+  clearArticles,
   getArticles,
   addHomeScreenArticles,
   doaddArticleLocalyAndToServer,
@@ -75,6 +76,7 @@ const HomeScreen = () => {
           articles.push(article);
         });
         console.log('articles', articles);
+        dispatch(clearArticles());
         dispatch(addHomeScreenArticles({ articles }));
       })
       .catch((error) => {
@@ -124,15 +126,14 @@ const HomeScreen = () => {
           }}
         />
       </Modal>
-
       <View style={[HomeScreenStyles.header, HomeScreenStyles.bar]}>
         <View style={HomeScreenStyles.barIconsLeft}>
-          <Icon.FontAwesome
-            name='pencil'
+          <Icon.Ionicons
+            name='person'
             color={barIconColor}
             style={HomeScreenStyles.barIcon}
             size={barIconSize}
-          ></Icon.FontAwesome>
+          ></Icon.Ionicons>
         </View>
         <View style={HomeScreenStyles.barIconsRight}>
           <Icon.FontAwesome
@@ -151,17 +152,6 @@ const HomeScreen = () => {
       </View>
       <View style={HomeScreenStyles.section}>
         <View style={HomeScreenStyles.sectionData}>
-          <Collapse>
-            <CollapseHeader>
-              <View>
-                <Text>Calendar</Text>
-              </View>
-            </CollapseHeader>
-            <CollapseBody>
-              <Calendar />
-            </CollapseBody>
-          </Collapse>
-
           <View style={HomeScreenStyles.sectionDataTitleWithIcon}>
             <Text style={HomeScreenStyles.sectionDataTitle}>Quick facts</Text>
             <Icon.Ionicons
@@ -172,7 +162,7 @@ const HomeScreen = () => {
             ></Icon.Ionicons>
           </View>
 
-          <View style={HomeScreenStyles.sectionDataContent}>
+          <View style={HomeScreenStyles.sectionDataQuickFacts}>
             <SectionDataContentItem
               itemDescription={'Active patients'}
               itemData={27}
@@ -188,20 +178,43 @@ const HomeScreen = () => {
               itemData={24}
             />
           </View>
+          <View>
+            <Collapse>
+              <CollapseHeader>
+                <View>
+                  <Text>Click for Calendar</Text>
+                </View>
+              </CollapseHeader>
+              <CollapseBody
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                  backgroundColor: '#EDEDED',
+                }}
+              >
+                {/* <Calendar /> */}
+                <SectionDataContentItem itemDescription={'UV'} itemData={2} />
+              </CollapseBody>
+            </Collapse>
+          </View>
         </View>
-        <ScrollView style={HomeScreenStyles.sectionArticles}>
-          {articlesList.map((article) => (
-            <SectionArticle
-              key={article.id}
-              id={article.id}
-              imageUrl={article.imageUrl}
-              title={article.title}
-              isFavorite={article.isFavorite}
-              content={article.content}
-            ></SectionArticle>
-          ))}
-        </ScrollView>
+        <View>
+          <ScrollView style={HomeScreenStyles.sectionArticles}>
+            {articlesList.map((article) => (
+              <SectionArticle
+                key={article.id}
+                id={article.id}
+                imageUrl={article.imageUrl}
+                title={article.title}
+                isFavorite={article.isFavorite}
+                content={article.content}
+              ></SectionArticle>
+            ))}
+          </ScrollView>
+        </View>
       </View>
+
       <View style={[HomeScreenStyles.footer, HomeScreenStyles.bar]}>
         <View style={HomeScreenStyles.barIconWithText}>
           <TouchableOpacity>
@@ -215,7 +228,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={HomeScreenStyles.barIconWithText}>
-          <TouchableOpacity onPress={showCollectionResponse}>
+          <TouchableOpacity onPress={() => {}}>
             <Icon.Ionicons
               name='stats-chart'
               color={barIconColor}

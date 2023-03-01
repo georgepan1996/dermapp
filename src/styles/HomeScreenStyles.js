@@ -1,93 +1,118 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 const backgroundColor = '#F7F7F7';
 const primaryColor = '#E8B3A2';
 const barIconTextColor = '#fff';
 const itemDataColor = '#000';
-const articleFontFamily = 'sans-serif'; //android
+const articleFontFamily =
+  Platform.OS === 'ios' ? 'Helvetica Neue' : 'sans-serif';
 const articleTextColor = '#737373';
 
 export default StyleSheet.create({
   container: {
-    height: '100%',
+    flex: 1,
   },
   header: {
+    // is it needed?
     alignItems: 'flex-end',
+    backgroundColor: 'primaryColor',
     paddingBottom: '2%',
   },
-
   bar: {
     backgroundColor: primaryColor,
-    height: '10%',
-    display: 'flex',
-    paddingHorizontal: '1%',
+    height: '8%',
+    paddingHorizontal: '5%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 
-  barIconsLeft: {},
-  barIconsRight: {
-    display: 'flex',
+  barIconsLeft: {
     flexDirection: 'row',
   },
+  barIconsRight: {
+    flexDirection: 'row',
+  },
+
   barIcon: {
     textAlign: 'center',
-    paddingHorizontal: '3%',
+    paddingHorizontal: '1%',
   },
-  barIconWithText: {},
+
   barIconText: {
     paddingTop: 4,
     textAlign: 'center',
     color: barIconTextColor,
   },
+
   section: {
     backgroundColor: backgroundColor,
-    height: '80%',
+    flex: 1,
     paddingHorizontal: '3%',
     paddingTop: '3%',
   },
+
   sectionData: {
     backgroundColor: '#FFF',
-    height: '20%',
+
+    flex: 1,
     borderRadius: 30,
     marginBottom: '3%',
+
     //Shadow props for Android
     elevation: 5,
     shadowColor: '#52006A',
     //Shadow props for iOS (different example)
     /*
-        shadowColor: '#52006A',
-        shadowOffset: {width: -2, height: 4},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        */
+          shadowColor: '#52006A',
+          shadowOffset: {width: -2, height: 4},
+          shadowOpacity: 0.2,
+          shadowRadius: 3,
+          */
   },
+
   sectionDataTitleWithIcon: {
     //special case for having one item centered and one at right
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
-    position: 'relative',
-    alignItems: 'center',
     paddingHorizontal: '5%',
     paddingTop: '2%',
     paddingBottom: '3%',
   },
+
   sectionDataTitle: {
-    position: 'absolute',
+    alignSelf: 'flex-start',
     color: '#000',
     fontWeight: 'bold',
     fontSize: 15,
   },
+
   sectionDataTitleIconRight: {
-    marginLeft: 'auto',
+    // marginLeft: '1%',
+    alignSelf: 'flex-end',
   },
-  sectionDataContent: {
-    height: '80%',
-    display: 'flex',
+  // sectionDataContentAndCalendar: {
+  //   flex: 1,
+  // alignItems: 'flex-start',
+  // },
+  sectionDataQuickFacts: {
+    flex: 1,
+
     alignItems: 'flex-start',
     flexDirection: 'row',
     justifyContent: 'space-around',
+  },
+  // sectionDataCallendar: {
+  //   alignSelf: 'center',
+  //   paddingTop: '3%',
+  //   // justifyContent: 'space-around',
+  //   flex: 1,
+  //   // flexBasis: 0,
+  //   flexGrow: 1,
+  //   // flexShrink: 1,
+  // },
+  calendarTitle: {
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
   sectionDataContentItem: {
     flexBasis: 0,
@@ -106,12 +131,16 @@ export default StyleSheet.create({
     fontSize: 12,
   },
   itemDataDescription: {},
+
   sectionArticles: {
-    height: '60%',
+    height: '80%',
+    display: 'flex',
     padding: '3%',
   },
+
   sectionArticle: {
-    height: 90, //maybe fix height by calculating your screen's pixels first (see pixel ratio)
+    marginTop: '2%',
+    marginBottom: '2%',
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',

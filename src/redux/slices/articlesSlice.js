@@ -52,6 +52,11 @@ const articles = createSlice({
       console.log('removed', state.homeScreenArticles.splice(articleIndex, 1));
       deleteDoc(doc(db, 'posts', action.payload.id));
     },
+    clearArticles: (state, action) => {
+      // ---
+      state.homeScreenArticles.splice(0);
+      console.log('articles cleared', state.homeScreenArticles);
+    },
     makeArticleFavorite: (state, action) => {
       const isFavoriteRef = doc(db, 'posts', action.payload.id);
 
@@ -78,6 +83,7 @@ export const selectArticles = (state) => state.articles.homeScreenArticles;
 export const {
   doaddArticleLocalyAndToServer,
   removeArticle,
+  clearArticles,
   makeArticleFavorite,
   addHomeScreenArticles,
 } = articles.actions;
