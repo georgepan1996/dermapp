@@ -44,14 +44,14 @@ export default StyleSheet.create({
   },
 
   section: {
+    height: '92%',
     backgroundColor: backgroundColor,
     paddingHorizontal: '3%',
     paddingTop: '3%',
   },
 
   sectionData: {
-    backgroundColor: '#FFF',
-    flex: 1,
+    backgroundColor:  '#fff',
     borderRadius: 30,
     marginBottom: '3%',
 
@@ -91,7 +91,6 @@ export default StyleSheet.create({
   // alignItems: 'flex-start',
   // },
   sectionDataQuickFacts: {
-    flex: 1,
 
     alignItems: 'flex-start',
     flexDirection: 'row',
@@ -130,9 +129,9 @@ export default StyleSheet.create({
   itemDataDescription: {},
 
   sectionArticles: {
-    height: '80%',
+    height: '70%',
     display: 'flex',
-    padding: '3%',
+    paddingHorizontal: '3%',
   },
 
   sectionArticle: {
@@ -163,6 +162,9 @@ export default StyleSheet.create({
     letterSpacing: 0.2,
   },
   footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
     alignItems: 'center',
   },
   verticalDivider: {

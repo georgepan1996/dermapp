@@ -162,7 +162,6 @@ const HomeScreen = () => {
               size={sectionDataTitleIconSize}
             ></Icon.Ionicons>
           </View>
-
           <View style={HomeScreenStyles.sectionDataQuickFacts}>
             <SectionDataContentItem
               itemDescription={'Active patients'}
@@ -179,37 +178,30 @@ const HomeScreen = () => {
               itemData={24}
             />
           </View>
-          <Collapse>
-            <CollapseHeader>
-              <View style={{
-                height: 20
-              }}>
-                <Text>Click for Calendar</Text>
-              </View>
-            </CollapseHeader>
-            <CollapseBody
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  backgroundColor: 'red',
-                  position: 'absolute',
-                  top: 20
-                }}
-            >
-              <Calendar />
-              {/*<Text>dfsd</Text>*/}
-              {/*<Text>dfsd</Text>*/}
-              {/*<Text>dfsd</Text>*/}
-              {/*<SectionDataContentItem itemDescription={'UV'} itemData={2} />*/}
-            </CollapseBody>
-          </Collapse>
+          <View>
+            <Collapse>
+              <CollapseHeader>
+                <View style={{
+                }}>
+                  <Text>Click for Calendar</Text>
+                </View>
+              </CollapseHeader>
+              <CollapseBody
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                  }}
+              >
+                <Calendar />
+                {/*<Text>dfsd</Text>*/}
+                {/*<SectionDataContentItem itemDescription={'UV'} itemData={2} />*/}
+              </CollapseBody>
+            </Collapse>
+          </View>
         </View>
 
-        <View>
-        </View>
-
-        <View>
+        <View style={{height: '75%'}}>
           <ScrollView style={HomeScreenStyles.sectionArticles}>
             {articlesList.map((article) => (
               <SectionArticle
